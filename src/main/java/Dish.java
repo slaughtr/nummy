@@ -41,6 +41,7 @@ public static List<Dish> all() {
     .executeAndFetch(Dish.class);
   }
 }
+
 public void save() {
   try(Connection con = DB.sql2o.open()) {
     String sql = "INSERT INTO dishes (name, rating, food_type, restaurant_id) VALUES (:name, :rating, :foodType, :restaurantId)";
