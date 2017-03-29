@@ -2,18 +2,17 @@ import org.sql2o.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.LocalDate;
 
 public class Review {
   private int id;
   private int rating;
   private String reviewerName;
-  private LocalDate reviewDate;
+  private String reviewDate;
   private int dishId;
 
-  public Review(int rating, String reviwerName, LocalDate reviewDate, int dishId) {
+  public Review(int rating, String reviewerName, String reviewDate, int dishId) {
     this.rating = rating;
-    this.reviwerName = reviwerName;
+    this.reviewerName = reviewerName;
     this.reviewDate = reviewDate;
     this.dishId = dishId;
   }
@@ -26,8 +25,12 @@ public class Review {
     return reviewerName;
   }
 
-  public LocalDate reviewDate() {
+  public String reviewDate() {
     return reviewDate;
+  }
+
+  public int getReviewId() {
+    return id;
   }
 
   public int getDishId() {
@@ -40,20 +43,22 @@ public class Review {
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql)
       .addColumnMapping("reviewer_name", "reviewerName")
+      .addColumnMapping("review_date", "reviewDate")
+
       .addColumnMapping("dish_id", "dishId")
       .executeAndFetch(Review.class);
     }
   }
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO reviews (rating, reviewer_name, review_date, dish_id) VALUES (:rating, :reviewerName CAST(:review_date AS DATE), :reviewDate, :dishId)";
-      // String date = ""
+      String sql = "INSERT INTO reviews (rating, reviewer_name, review_date, dish_id) VALUES (:rating, :reviewerName, CAST(:review_date AS DATE), :dishId)";
       this.id = (int) con.createQuery(sql, true)
       .addColumnMapping("reviewer_name", "reviewerName")
         .addColumnMapping("review_date", "reviewDate")
         .addColumnMapping("dish_id", "dishId")
-        .addParameter("name", this.reviewerName)
-        .addParameter("birthdate", this.birthdate)
+        .addParameter("rating", this.rating)
+        .addParameter("reviewerName", this.reviewerName)
+        .addParameter("review_date", this.reviewDate)
         .addParameter("dishId", this.dishId)
         .executeUpdate()
         .getKey();
@@ -68,6 +73,7 @@ public class Review {
       //pulling information from the database, maps info from column called "name" to class variable "heroName"
       .addColumnMapping("dish_id", "dishId")
       .addColumnMapping("reviewer_name", "reviewerName")
+      .addColumnMapping("review_date", "reviewDate")
       .executeAndFetchFirst(Review.class);
     return patient;
   }
@@ -80,7 +86,7 @@ public class Review {
       return false;
     } else {
       Review newReview = (Review) otherReview;
-      return this.getReviewName().equals(newReview.getReviewName());
+      return this.getReviewerName().equals(newReview.getReviewerName());
       // && this.getReviewId() == newReview.getReviewId();
     }
   }
