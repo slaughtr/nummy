@@ -28,6 +28,7 @@ public class App {
       model.put("template", "templates/index.vtl");
       model.put("dishes", Dish.all());
       model.put("foodTypes", foodTypes);
+      model.put("restaurants", Restaurant.all());
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
