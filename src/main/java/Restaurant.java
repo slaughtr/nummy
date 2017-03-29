@@ -6,7 +6,7 @@ import java.util.List;
 public class Restaurant {
   private String name;
   private String address;
-  private String phoneNumber;
+  private int phoneNumber;
   private String website;
   private Double[] rating;
   private String foodType;
@@ -21,11 +21,15 @@ public class Restaurant {
     return name;
   }
 
+  public String getRestaurantFoodType() {
+    return foodType;
+  }
+
   public String getRestaurantAddress() {
     return address;
   }
 
-  public String getRestaurantPhoneNumber() {
+  public int getRestaurantPhoneNumber() {
     return phoneNumber;
   }
 
@@ -33,5 +37,60 @@ public class Restaurant {
     return website;
   }
 
+  public int getRestaurantId() {
+    return id;
+  }
 
+  public List<Dish> getDishes() {
+try(Connection con = DB.sql2o.open()) {
+  String sql = "SELECT * FROM dishes where restaurant_id=:id";
+  return con.createQuery(sql)
+    .addParameter("id", this.id)
+    .addColumnMapping("restaurant_id", "restaurantId")
+    .executeAndFetch(Dish.class);
+}
+}
+
+  public static List<Restaurant> all() {
+  String sql = "SELECT * FROM restaurants";
+  try(Connection con = DB.sql2o.open()) {
+    return con.createQuery(sql)
+    .addColumnMapping("food_type", "foodType")
+    .addColumnMapping("phone_number", "phoneNumber")
+    .executeAndFetch(Restaurant.class);
+  }
+}
+
+
+  public void save() {
+  try(Connection con = DB.sql2o.open()) {
+    String sql = "INSERT INTO restaurants (name, food_type, address, phone_number, website, rating) VALUES (:name, :foodType, :address, :phoneNum, :website, :rating)";
+    this.id = (int) con.createQuery(sql, true)
+    .addColumnMapping("food_type", "foodType")
+    .addColumnMapping("phone_number", "phoneNumber")
+      .addParameter("name", this.name)
+      .addParameter("foodType", this.foodType)
+      .addParameter("address", this.address)
+      .addParameter("phoneNum", this.phoneNumber)
+      .addParameter("website", this.website)
+      .addParameter("rating", this.rating)
+
+
+      .executeUpdate()
+      .getKey();
+  }
+}
+
+
+
+  @Override
+public boolean equals(Object otherRestaurant){
+  if (!(otherRestaurant instanceof Restaurant)){
+    return false;
+  } else {
+    Restaurant newRestaurant = (Restaurant) otherRestaurant;
+    return this.getRestaurantName().equals(newRestaurant.getRestaurantName());
+    // && this.getRestaurantId() == newRestaurant.getRestaurantId();
+  }
+}
 }
