@@ -8,6 +8,8 @@ public class App {
   public static void main(String[] args) {
     staticFileLocation("/public");
     String layout = "templates/layout.vtl";
+    List<String> foodTypes = new ArrayList<>(Arrays.asList("Burgers", "Pasta", "Pizza", "Sushi", "Tacos", "Greasy"));
+
 
     Dish firstDish = new Dish("Spaghetti", "Italian", 1);
     firstDish.save();
