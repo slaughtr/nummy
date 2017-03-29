@@ -12,9 +12,15 @@ public class RestaurantTest {
   @After
   public void tearDown() {
     try (Connection con = DB.sql2o.open()) {
-      String sql = "DELETE FROM name_of_your_table *;";
+      String sql = "DELETE FROM restaurants *;";
       con.createQuery(sql).executeUpdate();
     }
+  }
+
+  @Test
+  public void restaurant_InstantiatesCorrectly_True() {
+    Restaurant testRestaurant = new Restaurant("Eatery", "American");
+    assertTrue(testRestaurant instanceof Restaurant);
   }
 
 }
