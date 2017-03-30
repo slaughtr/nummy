@@ -125,6 +125,18 @@ public class Restaurant {
     }
   }
 
+public static Restaurant find(int id) {
+try(Connection con = DB.sql2o.open()) {
+  String sql = "SELECT * FROM Restaurants WHERE id = :id";
+  Restaurant patient = con.createQuery(sql)
+    .addParameter("id", id)
+    .addColumnMapping("restaurant_id", "restaurantId")
+    .addColumnMapping("food_type", "foodType")
+    .executeAndFetchFirst(Restaurant.class);
+  return patient;
+  }
+}
+
 
 
   @Override

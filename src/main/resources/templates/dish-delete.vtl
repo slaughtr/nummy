@@ -1,0 +1,10 @@
+<!-- cuisine-delete.vtl -->
+<h1>Delete Dish:</h1>
+
+<h3>Click on a Dish to delete it:</h3>
+
+#foreach($dish in $dishes)
+  <a href="/dishes/$dish.getDishId()/delete">$dish.getFoodType()</a>
+#end
+  <br><a href="/"><button class="btn btn-primary">Back to Dishes</button></a>
+<!-- cuisine-delete.vtl -->

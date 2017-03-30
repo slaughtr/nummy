@@ -1,10 +1,22 @@
 <!--index.vtl-->
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <h2>Nummy Portland</h2>
-  </div>
-</div>
+<h1>Nummy!</h1>
+<h3>A better way to find the best dish!</h3>
 
+<h4>Restaurants:</h4><br>
+#if($restaurants)
+  #foreach($restaurant in $restaurants)
+    <p><a href="/restaurants/$restaurant.getRestaurantId()">$restaurant.getRestaurantName()</a></p><br>
+  #end
+#else
+  <p>No Restaurants Yet.</p>
+#end
+
+<a href="/restaurants/new"><button class="btn btn-primary">Add a new Restaurant</button></a>
+
+<!--<a href="/restaurants/delete"><button class="btn btn-primary">Delete dish</button></a>-->
+
+
+<<<<<<< HEAD
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <h2>Nummy Dishes</h2>
@@ -27,4 +39,8 @@
   </div>
 
 </div>
+=======
+>>>>>>> da4db8d4ff9f78b2b9e8910c3e846fb645e5e125
 <!--index.vtl-->
+
+<!--<a href="/form-login"><button type="button" name="button">Log in as Admin</button></a>-->
