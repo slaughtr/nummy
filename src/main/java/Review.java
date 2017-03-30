@@ -98,8 +98,7 @@ try(Connection con = DB.sql2o.open()) {
       return false;
     } else {
       Review newReview = (Review) otherReview;
-      return this.getReviewerName().equals(newReview.getReviewerName());
-      // && this.getReviewId() == newReview.getReviewId();
+      return this.getReviewerName().equals(newReview.getReviewerName()) && this.getReviewId() == newReview.getReviewId() && this.getRating() == newReview.getRating();
     }
   }
 

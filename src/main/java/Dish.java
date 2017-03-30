@@ -53,6 +53,18 @@ public class Dish {
     return (double) totalScore;
   }
 
+  public List<Review> getBestReviews() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM reviews WHERE dish_id = :dishId ORDER BY rating desc";
+      return con.createQuery(sql)
+      .addColumnMapping("dish_id", "dishId")
+      .addColumnMapping("reviewer_name", "reviewerName")
+      .addColumnMapping("review_date", "reviewDate")
+      .addParameter("dishId", this.id)
+      .executeAndFetch(Review.class);
+    }
+  }
+
   public static List<Dish> all() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM dishes";
@@ -98,8 +110,7 @@ public class Dish {
       return false;
     } else {
       Dish newDish = (Dish) otherDish;
-      return this.getDishName().equals(newDish.getDishName());
-      // && this.getDishId() == newDish.getDishId();
+      return this.getDishName().equals(newDish.getDishName()) && this.getDishId() == newDish.getDishId() && this.getDishReviews().equals(newDish.getDishReviews()) && this.getBestReviews().equals(newDish.getBestReviews());
     }
   }
 

@@ -1,5 +1,8 @@
 import org.sql2o.*;
 import org.junit.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import static org.junit.Assert.*;
 
 public class DishTest {
@@ -80,5 +83,38 @@ public class DishTest {
     Review myReview4 = new Review(40, "Joe", "2017-01-02", myDish.getDishId());
     myReview4.save();
     assertEquals(50, myDish.getAverageDishRating(), 0.01);
+  }
+
+  @Test
+  public void getBestReviews_returnsReviewsInDescendingOrder_true() {
+    List<Review> reviewList = new ArrayList<Review>();
+    // List<Integer> reviewListWhatever = new ArrayList<Integer>();
+    Dish myDish = new Dish("Jojos", "Fried", 1);
+    myDish.save();
+    Review myReview = new Review(100, "Joe", "2017-01-02", myDish.getDishId());
+    myReview.save();
+    reviewList.add(myReview);
+    // reviewList.add(100);
+    // reviewList.add(10);
+    // reviewList.add(50);
+    // reviewList.add(40);
+    Review myReview2 = new Review(10, "Joe", "2017-01-02", myDish.getDishId());
+    myReview2.save();
+    reviewList.add(myReview2);
+    Review myReview3 = new Review(50, "Joe", "2017-01-02", myDish.getDishId());
+    myReview3.save();
+    reviewList.add(myReview3);
+    Review myReview4 = new Review(40, "Joe", "2017-01-02", myDish.getDishId());
+    myReview4.save();
+    reviewList.add(myReview4);
+    // for (Review review : myDish.getBestReviews()) {
+      // reviewListWhatever.add(review.getRating());
+    // }
+    assertEquals(myDish.getBestReviews().get(0), myReview);
+    assertEquals(myDish.getBestReviews().get(1), myReview3);
+    assertEquals(myDish.getBestReviews().get(2), myReview4);
+    assertEquals(myDish.getBestReviews().get(3), myReview2);
+    // assertEquals(reviewList, reviewListWhatever);
+
   }
 }
