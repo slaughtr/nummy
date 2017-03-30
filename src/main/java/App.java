@@ -16,14 +16,11 @@ public class App {
 
     get("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      model.put("Restaurants", Restaurant.all());
+      model.put("restaurants", Restaurant.all());
       model.put("template", "templates/index.vtl");
-<<<<<<< HEAD
       model.put("dishes", Dish.all());
       model.put("foodTypes", foodTypes);
       model.put("restaurants", Restaurant.all());
-=======
->>>>>>> da4db8d4ff9f78b2b9e8910c3e846fb645e5e125
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -55,7 +52,25 @@ public class App {
     get("/restaurants/:restaurantId", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Restaurant newRestaurant = Restaurant.find(Integer.parseInt(request.params("restaurantId")));
-      model.put("Restaurant", newRestaurant);
+      model.put("restaurant", newRestaurant);
+      model.put("template", "templates/restaurant.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/restaurants/:restaurantId", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Restaurant newRestaurant = Restaurant.find(Integer.parseInt(request.params("restaurantId")));
+      String dish = request.queryParams("dish");
+      String rating = request.queryParams("ranking");
+      Integer ratingInt = Integer.parseInt(rating);
+      String username = request.queryParams("username");
+      String date = request.queryParams("review_date");
+      Dish newDish = new Dish(dish, "", newRestaurant.getRestaurantId());
+      Review newReview = new Review(ratingInt, username, date, newDish.getDishId());
+      model.put("restaurant", newRestaurant);
+      model.put("reviews", newRestaurant.getRestaurantReviews());
+      model.put("dish", newDish);
+      model.put("review", newReview);
       model.put("template", "templates/restaurant.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -64,7 +79,7 @@ public class App {
     //   Map<String, Object> model = new HashMap<String, Object>();
     //   Restaurant newRestaurant = Restaurant.find(Integer.parseInt(request.params("restaurantId")));
     //   newRestaurant.delete();
-    //   model.put("Restaurant", newRestaurant.all());
+    //   model.put("restaurant", newRestaurant.all());
     //   model.put("template", "templates/index.vtl");
     //   return new ModelAndView(model, layout);
     // }, new VelocityTemplateEngine());

@@ -48,6 +48,7 @@ public class Restaurant {
       .addParameter("id", this.id)
       .addColumnMapping("restaurant_id", "restaurantId")
       .addColumnMapping("food_type", "foodType")
+      .addColumnMapping("phone_number", "phoneNumber")
       .executeAndFetch(Dish.class);
     }
   }
@@ -132,6 +133,7 @@ try(Connection con = DB.sql2o.open()) {
     .addParameter("id", id)
     .addColumnMapping("restaurant_id", "restaurantId")
     .addColumnMapping("food_type", "foodType")
+    .addColumnMapping("phone_number", "phoneNumber")
     .executeAndFetchFirst(Restaurant.class);
   return patient;
   }

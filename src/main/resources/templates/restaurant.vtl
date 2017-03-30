@@ -12,7 +12,11 @@
   </tr>
 </table>
 
+#foreach ($rating in $reviews)
+<p>$rating.getRating()</p>
+#end
 
+<p>$review.getRating()</p>
 
 <hr>
 <h2>REVIEWS for $restaurant.getRestaurantName()</h2>
@@ -22,13 +26,19 @@
 
 <h1 class="well">Leave a review for $restaurant.getRestaurantName()</h1>
 
-<form action="/restaurants/$getRestaurantId.getId()" method="post" class="form-horizontal">
+<form action="/restaurants/$restaurant.getRestaurantId()" method="post" class="form-horizontal">
   <div class="form-group">
     <label for="username" class="col-sm-2 control-label">User name:</label>
     <div class="col-sm-10">
-    <input id="username" name="username" type="text" value="$username" readonly="readonly">
+    <input id="username" name="username" type="text" value="$username">
     </div>
   </div>
+  <div class="form-group">
+      <label for="dish" class="col-sm-2 control-label">Dish you had:</label>
+      <div class="col-sm-10">
+      <input id="dish" name="dish" type="text" value="$dish.getDishName()">
+      </div>
+    </div>
 
     <div class="form-group">
       <label for="description" class="col-sm-2 control-label">Comments</label>
@@ -47,13 +57,16 @@
     <div class="form-group">
     <label for="ranking" class="col-sm-2 control-label">How would you rank this restaurant?</label>
     <div class="col-sm-10">
-    <select class="col-sm-2 control-label" name="ranking" id="ranking">
+    <!-- <select class="col-sm-2 control-label" name="ranking" id="ranking">
       <option value="1">1 star</option>
       <option value="2">2 stars</option>
       <option value="3">3 stars</option>
       <option value="4">4 stars</option>
       <option value="5">5 stars</option>
-    </select>
+    </select> -->
+    <label for="ranking" class="col-sm-2 control-label">Rating</label>
+    <div class="col-sm-10">
+    <input id="ranking" name="ranking" type="number">
     </div>
   </div>
     <div class="form-group">

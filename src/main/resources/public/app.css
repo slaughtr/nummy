@@ -9,6 +9,7 @@ html,body {
 }
 #myCarousel img{
     object-fit: cover;
+    max-height: 400px;
 }
 /*.carousel,
 .carousel-inner {
