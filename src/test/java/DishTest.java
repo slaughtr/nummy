@@ -57,4 +57,14 @@ public void dish_instantiatesWithId_true() {
    secondDish.save();
    assertEquals(Dish.find(secondDish.getDishId()), secondDish);
  }
+
+ @Test
+ public void getRestaurantReviews_returnsProperReviews_true() {
+   Dish myDish = new Dish("Jojos", "Fried", 1);
+   myDish.save();
+   Review myReview = new Review(90, "Joe", "2017-01-02", myDish.getDishId());
+   myReview.save();
+   assertEquals(90, myDish.getDishReviews().get(0).getRating());
+ }
+
 }

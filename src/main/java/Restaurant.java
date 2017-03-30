@@ -87,8 +87,6 @@ public class Restaurant {
       .addParameter("phoneNum", this.phoneNumber)
       .addParameter("website", this.website)
       .addParameter("rating", this.rating)
-
-
       .executeUpdate()
       .getKey();
     }

@@ -34,8 +34,11 @@ public class Dish {
 
 public List<Review> getDishReviews() {
   try(Connection con = DB.sql2o.open()) {
-    String sql = "SELECT * FROM reviews WHERE dish_id = :dishId)";
+    String sql = "SELECT * FROM reviews WHERE dish_id = :dishId";
     return con.createQuery(sql)
+    .addColumnMapping("reviewer_name", "reviewerName")
+      .addColumnMapping("review_date", "reviewDate")
+      .addColumnMapping("dish_id", "dishId")
     .addParameter("dishId", this.id)
     .executeAndFetch(Review.class);
   }
