@@ -109,8 +109,7 @@ public class Restaurant {
       return false;
     } else {
       Restaurant newRestaurant = (Restaurant) otherRestaurant;
-      return this.getRestaurantName().equals(newRestaurant.getRestaurantName());
-      // && this.getRestaurantId() == newRestaurant.getRestaurantId();
+      return this.getRestaurantName().equals(newRestaurant.getRestaurantName()) && this.getRestaurantId() == newRestaurant.getRestaurantId();
     }
   }
 }

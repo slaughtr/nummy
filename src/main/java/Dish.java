@@ -65,6 +65,18 @@ public class Dish {
     }
   }
 
+  public List<Review> getWorstReviews() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM reviews WHERE dish_id = :dishId ORDER BY rating asc";
+      return con.createQuery(sql)
+      .addColumnMapping("dish_id", "dishId")
+      .addColumnMapping("reviewer_name", "reviewerName")
+      .addColumnMapping("review_date", "reviewDate")
+      .addParameter("dishId", this.id)
+      .executeAndFetch(Review.class);
+    }
+  }
+
   public static List<Dish> all() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM dishes";
