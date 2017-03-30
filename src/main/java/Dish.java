@@ -32,9 +32,18 @@ public class Dish {
   return restaurantId;
 }
 
-public static List<Dish> all() {
-  String sql = "SELECT * FROM dishes";
+public List<Review> getDishReviews() {
   try(Connection con = DB.sql2o.open()) {
+    String sql = "SELECT * FROM reviews WHERE dish_id = :dishId)";
+    return con.createQuery(sql)
+    .addParameter("dishId", this.id)
+    .executeAndFetch(Review.class);
+  }
+}
+
+public static List<Dish> all() {
+  try(Connection con = DB.sql2o.open()) {
+    String sql = "SELECT * FROM dishes";
     return con.createQuery(sql)
     .addColumnMapping("restaurant_id", "restaurantId")
     .addColumnMapping("food_type", "foodType")
