@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 public class DishTest {
 
   @Rule
-   public DatabaseRule database = new DatabaseRule();
+  public DatabaseRule database = new DatabaseRule();
 
   @Test
   public void dish_InstantiatesCorrectly_true() {
@@ -26,11 +26,11 @@ public class DishTest {
   }
 
   @Test
-public void dish_instantiatesWithId_true() {
-  Dish testDish = new Dish("Spaghetti", "Italian", 1);
-  testDish.save();
-  assertTrue(testDish.getDishId() > 0);
-}
+  public void dish_instantiatesWithId_true() {
+    Dish testDish = new Dish("Spaghetti", "Italian", 1);
+    testDish.save();
+    assertTrue(testDish.getDishId() > 0);
+  }
 
   @Test
   public void dish_SavesInDatabase_true() {
@@ -50,21 +50,35 @@ public void dish_instantiatesWithId_true() {
   }
 
   @Test
- public void find_returnsDishWithSameId_secondDish() {
-   Dish firstDish = new Dish("Spaghetti", "Italian", 1);
-   firstDish.save();
-   Dish secondDish = new Dish("French fries", "American", 1);
-   secondDish.save();
-   assertEquals(Dish.find(secondDish.getDishId()), secondDish);
- }
+  public void find_returnsDishWithSameId_secondDish() {
+    Dish firstDish = new Dish("Spaghetti", "Italian", 1);
+    firstDish.save();
+    Dish secondDish = new Dish("French fries", "American", 1);
+    secondDish.save();
+    assertEquals(Dish.find(secondDish.getDishId()), secondDish);
+  }
 
- @Test
- public void getRestaurantReviews_returnsProperReviews_true() {
-   Dish myDish = new Dish("Jojos", "Fried", 1);
-   myDish.save();
-   Review myReview = new Review(90, "Joe", "2017-01-02", myDish.getDishId());
-   myReview.save();
-   assertEquals(90, myDish.getDishReviews().get(0).getRating());
- }
+  @Test
+  public void getRestaurantReviews_returnsProperReviews_true() {
+    Dish myDish = new Dish("Jojos", "Fried", 1);
+    myDish.save();
+    Review myReview = new Review(90, "Joe", "2017-01-02", myDish.getDishId());
+    myReview.save();
+    assertEquals(90, myDish.getDishReviews().get(0).getRating());
+  }
 
+  @Test
+  public void getAverageDishRating_returnsAverageProperly_true() {
+    Dish myDish = new Dish("Jojos", "Fried", 1);
+    myDish.save();
+    Review myReview = new Review(100, "Joe", "2017-01-02", myDish.getDishId());
+    myReview.save();
+    Review myReview2 = new Review(10, "Joe", "2017-01-02", myDish.getDishId());
+    myReview2.save();
+    Review myReview3 = new Review(50, "Joe", "2017-01-02", myDish.getDishId());
+    myReview3.save();
+    Review myReview4 = new Review(40, "Joe", "2017-01-02", myDish.getDishId());
+    myReview4.save();
+    assertEquals(50, myDish.getAverageDishRating(), 0.01);
+  }
 }
