@@ -62,14 +62,15 @@ public void restaurant_instantiatesWithId_true() {
     assertEquals(myDish.getRestaurantId(), myRestaurant.getRestaurantId());
   }
 
-  // @Test
-  // public void getRestaurantReviews_returnsProperReviews_true() {
-  //   Restaurant myRestaurant = new Restaurant("Household", "Chores");
-  //   myRestaurant.save();
-  //   Dish myDish = new Dish("Jojos", "Fried", myRestaurant.getRestaurantId());
-  //   myDish.save();
-  //   Review myReview = new Review(90, "Joe", "2017-01-02", myDish.getDishId());
-  //   assertEquals(90, myRestaurant.getRestaurantReviews().get(0));
-  // }
+  @Test
+  public void getRestaurantReviews_returnsProperReviews_true() {
+    Restaurant myRestaurant = new Restaurant("Household", "Chores");
+    myRestaurant.save();
+    Dish myDish = new Dish("Jojos", "Fried", myRestaurant.getRestaurantId());
+    myDish.save();
+    Review myReview = new Review(90, "Joe", "2017-01-02", myDish.getDishId());
+    myReview.save();
+    assertEquals(90, myRestaurant.getRestaurantReviews().get(0).getRating());
+  }
 
 }
