@@ -1,0 +1,9 @@
+<h1>Your restaurants</h1>
+
+#if($dish)
+  #foreach($i in $dish.getRestaurants())
+    <ul>
+      <a href="/cuisines/$cuisine.getId()/restaurants/i.getId()"><li>$i.getName()</li></a><a href="/cuisines/$cuisine.getId()/restaurants/i.getId()/delete">delete restaurant</a>
+    </ul>
+  #end
+#end

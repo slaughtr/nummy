@@ -1,0 +1,10 @@
+<!-- restaurant-delete.vtl -->
+<h1>Delete a Restaurant:</h1>
+
+<h3>Click on a Restaurant to delete it:</h3>
+
+#foreach($restaurant in $restaurants)
+  <a href="/restaurants/$restaurant.getRestaurantId()/delete">$restaurant.getRestaurantName()</a>
+#end
+  <br><a href="/"><button class="btn btn-primary">Back to Restaurants</button></a>
+<!-- restaurant-delete.vtl -->
