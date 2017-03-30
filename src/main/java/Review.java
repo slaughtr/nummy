@@ -68,15 +68,27 @@ public class Review {
   public static Review find(int id) {
   try(Connection con = DB.sql2o.open()) {
     String sql = "SELECT * FROM reviews WHERE id = :id";
-    Review patient = con.createQuery(sql)
+    Review review = con.createQuery(sql)
       .addParameter("id", id)
-      //pulling information from the database, maps info from column called "name" to class variable "heroName"
       .addColumnMapping("dish_id", "dishId")
       .addColumnMapping("reviewer_name", "reviewerName")
       .addColumnMapping("review_date", "reviewDate")
       .executeAndFetchFirst(Review.class);
-    return patient;
+    return review;
   }
+}
+
+public static int findDishId(int dishId) {
+try(Connection con = DB.sql2o.open()) {
+  String sql = "SELECT * FROM reviews WHERE dish_id = :dishId";
+  Review review = con.createQuery(sql)
+    .addParameter("dishId", dishId)
+    .addColumnMapping("dish_id", "dishId")
+    .addColumnMapping("reviewer_name", "reviewerName")
+    .addColumnMapping("review_date", "reviewDate")
+    .executeAndFetchFirst(Review.class);
+  return review.getDishId();
+}
 }
 
 

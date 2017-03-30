@@ -5,20 +5,9 @@ import java.time.LocalDate;
 
 public class ReviewTest {
 
-  @Before
-  public void setUp() {
-    DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/nummy_test", null, null);
-  }
+  @Rule
+   public DatabaseRule database = new DatabaseRule();
 
-  @After
-  public void tearDown() {
-    try (Connection con = DB.sql2o.open()) {
-      String sql = "DELETE FROM reviews *;";
-      con.createQuery(sql).executeUpdate();
-    }
-  }
-
-  //  public Review(int rating, String reviwerName, LocalDate reviewDate, int dishId)
   @Test
   public void review_InstantiatesCorrectly_true() {
     Review testReview = new Review(1, "Joe", "1999-01-01", 1);
@@ -65,9 +54,19 @@ public void review_instantiatesWithId_true() {
  public void find_returnsReviewWithSameId_secondReview() {
    Review firstReview = new Review(1, "Joe", "1999-01-01", 1);
    firstReview.save();
-   Review secondReview = new Review(4, "Jose", "1999-01-01", 1);
+   Review secondReview = new Review(4, "Jose", "1999-01-01", 2);
    secondReview.save();
    assertEquals(Review.find(secondReview.getReviewId()), secondReview);
+ }
+
+ @Test
+ public void find_returnsReviewForSpecificDish_true() {
+     Dish myDish = new Dish("Jojos", "Fried", 1);
+     myDish.save();
+     int myDishId = myDish.getDishId();
+     Review myReview = new Review(90, "Joe", "2017-01-02", myDish.getDishId());
+     myReview.save();
+     assertEquals(myDishId, Review.findDishId(myDishId));
  }
 
 }

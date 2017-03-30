@@ -1,21 +1,14 @@
 import org.sql2o.*;
 import org.junit.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import static org.junit.Assert.*;
 
 public class RestaurantTest {
 
-  @Before
-  public void setUp() {
-    DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/nummy_test", null, null);
-  }
-
-  @After
-  public void tearDown() {
-    try (Connection con = DB.sql2o.open()) {
-      String sql = "DELETE FROM restaurants *;";
-      con.createQuery(sql).executeUpdate();
-    }
-  }
+  @Rule
+   public DatabaseRule database = new DatabaseRule();
 
   @Test
   public void restaurant_InstantiatesCorrectly_True() {
@@ -68,5 +61,15 @@ public void restaurant_instantiatesWithId_true() {
     Dish savedDish = Dish.find(myDish.getRestaurantId());
     assertEquals(myDish.getRestaurantId(), myRestaurant.getRestaurantId());
   }
+
+  // @Test
+  // public void getRestaurantReviews_returnsProperReviews_true() {
+  //   Restaurant myRestaurant = new Restaurant("Household", "Chores");
+  //   myRestaurant.save();
+  //   Dish myDish = new Dish("Jojos", "Fried", myRestaurant.getRestaurantId());
+  //   myDish.save();
+  //   Review myReview = new Review(90, "Joe", "2017-01-02", myDish.getDishId());
+  //   assertEquals(90, myRestaurant.getRestaurantReviews().get(0));
+  // }
 
 }

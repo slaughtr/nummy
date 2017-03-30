@@ -56,6 +56,9 @@ public class Restaurant {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM reviews WHERE dish_id IN (SELECT id FROM dishes WHERE restaurant_id = :restaurantId)";
       return con.createQuery(sql)
+      .addColumnMapping("reviewer_name", "reviewerName")
+        .addColumnMapping("review_date", "reviewDate")
+        .addColumnMapping("dish_id", "dishId")
       .addParameter("restaurantId", this.id)
       .executeAndFetch(Review.class);
     }
