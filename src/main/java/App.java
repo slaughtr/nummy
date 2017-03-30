@@ -66,7 +66,9 @@ public class App {
       String username = request.queryParams("username");
       String date = request.queryParams("review_date");
       Dish newDish = new Dish(dish, "", newRestaurant.getRestaurantId());
+      newDish.save();
       Review newReview = new Review(ratingInt, username, date, newDish.getDishId());
+      newReview.save();
       model.put("restaurant", newRestaurant);
       model.put("reviews", newRestaurant.getRestaurantReviews());
       model.put("dish", newDish);
