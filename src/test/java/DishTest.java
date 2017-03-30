@@ -82,7 +82,7 @@ public class DishTest {
     myReview3.save();
     Review myReview4 = new Review(40, "Joe", "2017-01-02", myDish.getDishId());
     myReview4.save();
-    assertEquals(50, myDish.getAverageDishRating(), 0.01);
+    assertEquals(25, myDish.getAverageDishRating(), 0.01);
   }
 
   @Test

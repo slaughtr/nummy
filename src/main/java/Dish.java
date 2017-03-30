@@ -45,12 +45,15 @@ public class Dish {
   }
 
   public double getAverageDishRating() {
-    int totalScore = 0;
+    double totalAboveSixtyFive = 0;
+    double totalScore = 0;
     for (Review review : getDishReviews()) {
-      totalScore += review.getRating();
+      if (review.getRating() > 65) {
+        totalAboveSixtyFive++;
+      }
     }
-    totalScore = totalScore/getDishReviews().size();
-    return (double) totalScore;
+    totalScore = ((getDishReviews().size() + totalAboveSixtyFive) /2)*10;
+    return totalScore;
   }
 
   public List<Review> getBestReviews() {
