@@ -73,6 +73,30 @@ public class Restaurant {
     return (double) totalScore;
   }
 
+  public List<Review> getBestReviews() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM reviews WHERE dish_id IN (SELECT id FROM dishes WHERE restaurant_id = :restaurantId) ORDER BY rating desc";
+      return con.createQuery(sql)
+      .addColumnMapping("dish_id", "dishId")
+      .addColumnMapping("reviewer_name", "reviewerName")
+      .addColumnMapping("review_date", "reviewDate")
+      .addParameter("restaurantId", this.id)
+      .executeAndFetch(Review.class);
+    }
+  }
+
+  public List<Review> getWorstReviews() {
+    try (Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM reviews WHERE dish_id IN (SELECT id FROM dishes WHERE restaurant_id = :restaurantId) ORDER BY rating asc";
+      return con.createQuery(sql)
+      .addColumnMapping("dish_id", "dishId")
+      .addColumnMapping("reviewer_name", "reviewerName")
+      .addColumnMapping("review_date", "reviewDate")
+      .addParameter("restaurantId", this.id)
+      .executeAndFetch(Review.class);
+    }
+  }
+
   public static List<Restaurant> all() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM restaurants";
