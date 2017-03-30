@@ -103,52 +103,31 @@ public void restaurant_instantiatesWithId_true() {
     myReview3.save();
     Review myReview4 = new Review(80, "Joe", "2017-01-02", myDish.getDishId());
     myReview4.save();
-    Restaurant myRestaurant2 = new Restaurant("The Jojo Place", "Fried");
+    assertEquals(myRestaurant.getBestReviews().get(0), myReview);
+    assertEquals(myRestaurant.getBestReviews().get(1), myReview2);
+    assertEquals(myRestaurant.getBestReviews().get(2), myReview4);
+    assertEquals(myRestaurant.getBestReviews().get(3), myReview3);
+  }
+
+  @Test
+  public void getBestReviews_returnsReviewsInAscendingOrder_true() {
+    Restaurant myRestaurant = new Restaurant("The Jojo Place", "Fried");
     myRestaurant.save();
-    Dish myDish = new Dish("Jojos", "Fried", myRestaurant2.getRestaurantId());
+    Dish myDish = new Dish("Jojos", "Fried", myRestaurant.getRestaurantId());
     myDish.save();
     Review myReview = new Review(100, "Joe", "2017-01-02", myDish.getDishId());
     myReview.save();
-    Review myReview2 = new Review(100, "Joe", "2017-01-02", myDish.getDishId());
+    Review myReview2 = new Review(10, "Joe", "2017-01-02", myDish.getDishId());
     myReview2.save();
-    Review myReview3 = new Review(100, "Joe", "2017-01-02", myDish.getDishId());
+    Review myReview3 = new Review(50, "Joe", "2017-01-02", myDish.getDishId());
     myReview3.save();
-    Review myReview4 = new Review(100, "Joe", "2017-01-02", myDish.getDishId());
+    Review myReview4 = new Review(40, "Joe", "2017-01-02", myDish.getDishId());
     myReview4.save();
-    Restaurant myRestaurant3 = new Restaurant("The Jojo Place", "Fried");
-    myRestaurant.save();
-    Dish myDish = new Dish("Jojos", "Fried", myRestaurant3.getRestaurantId());
-    myDish.save();
-    Review myReview = new Review(1, "Joe", "2017-01-02", myDish.getDishId());
-    myReview.save();
-    Review myReview2 = new Review(1, "Joe", "2017-01-02", myDish.getDishId());
-    myReview2.save();
-    Review myReview3 = new Review(1, "Joe", "2017-01-02", myDish.getDishId());
-    myReview3.save();
-    Review myReview4 = new Review(1, "Joe", "2017-01-02", myDish.getDishId());
-    myReview4.save();
-    assertEquals(myRestaurant.getBestReviews().get(0), myReview);
-    assertEquals(myRestaurant.getBestReviews().get(1), myReview3);
-    assertEquals(myRestaurant.getBestReviews().get(2), myReview4);
+    System.out.println(myRestaurant.getWorstReviews().get(0).getRating());
+    assertEquals(myRestaurant.getWorstReviews().get(0), myReview2);
+    assertEquals(myRestaurant.getWorstReviews().get(1), myReview4);
+    assertEquals(myRestaurant.getWorstReviews().get(2), myReview3);
+    assertEquals(myRestaurant.getWorstReviews().get(3), myReview);
   }
-
-  // @Test
-  // public void getBestReviews_returnsReviewsInAscendingOrder_true() {
-  //   Dish myDish = new Dish("Jojos", "Fried", 1);
-  //   myDish.save();
-  //   Review myReview = new Review(100, "Joe", "2017-01-02", myDish.getDishId());
-  //   myReview.save();
-  //   Review myReview2 = new Review(10, "Joe", "2017-01-02", myDish.getDishId());
-  //   myReview2.save();
-  //   Review myReview3 = new Review(50, "Joe", "2017-01-02", myDish.getDishId());
-  //   myReview3.save();
-  //   Review myReview4 = new Review(40, "Joe", "2017-01-02", myDish.getDishId());
-  //   myReview4.save();
-  //   System.out.println(myDish.getWorstReviews().get(0).getRating());
-  //   assertEquals(myDish.getWorstReviews().get(0), myReview2);
-  //   assertEquals(myDish.getWorstReviews().get(1), myReview4);
-  //   assertEquals(myDish.getWorstReviews().get(2), myReview3);
-  //   assertEquals(myDish.getWorstReviews().get(3), myReview);
-  // }
 
 }
