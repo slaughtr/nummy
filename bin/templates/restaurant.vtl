@@ -1,28 +1,35 @@
-<h2>$restaurant.getRestaurantName()</h2>
+<h2>$restaurant.getName()</h2>
 
 <table class="table table-striped">
   <tr>
     <td>Name</td>
     <td>Type</td>
     <td>Ranking</td>
+    <td>Vegan?</td>
   </tr>
   <tr>
-    <td>$restaurant.getRestaurantName()</td>
-    <td>$restaurant.getRestaurantFoodType()</td>
+    <td>$restaurant.getName()</td>
+    <td>$restaurant.getType()</td>
+    <td>$restaurant.rankingStars($restaurant.getAllRankings($restaurant.getId()))</td>
+    <td>$restaurant.getVegan()</td>
   </tr>
 </table>
 
 
 
 <hr>
-<h2>REVIEWS for $restaurant.getRestaurantName()</h2>
+<h2>REVIEWS for $restaurant.getName()</h2>
 <ul>
+#foreach ($review in $listreviews)
+Review by: $review.getReviewer($review.getReviewerId()) on $review.getReviewDate() Ranking: $restaurant.rankingStars($review.getRanking())
+  <li>$review.getDescription()</li>
+#end
 </ul>
 <hr>
 
-<h1 class="well">Leave a review for $restaurant.getRestaurantName()</h1>
+<h1 class="well">Leave a review for $restaurant.getName()</h1>
 
-<form action="/restaurants/$getRestaurantId.getId()" method="post" class="form-horizontal">
+<form action="/restaurants/$restaurant.getId()" method="post" class="form-horizontal">
   <div class="form-group">
     <label for="username" class="col-sm-2 control-label">User name:</label>
     <div class="col-sm-10">
@@ -66,4 +73,4 @@
 <hr>
 
 <p><a href="/">Return to Main Page</a></p>
-<hr>
+<p><span class="glyphicon glyphicon-trash"><a href="/restaurants/$restaurant.getId()/removerestaurant"></span>&nbsp;Delete this restaurant</a></p>
