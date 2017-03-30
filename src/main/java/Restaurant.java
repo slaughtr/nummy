@@ -64,6 +64,15 @@ public class Restaurant {
     }
   }
 
+  public double getAverageRestaurantRating() {
+    int totalScore = 0;
+    for (Review review : getRestaurantReviews()) {
+      totalScore += review.getRating();
+    }
+    totalScore = totalScore/getRestaurantReviews().size();
+    return (double) totalScore;
+  }
+
   public static List<Restaurant> all() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM restaurants";

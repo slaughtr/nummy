@@ -73,4 +73,21 @@ public void restaurant_instantiatesWithId_true() {
     assertEquals(90, myRestaurant.getRestaurantReviews().get(0).getRating());
   }
 
+  @Test
+  public void getAverageRestaurantRating_returnsAverageProperly_true() {
+    Restaurant myRestaurant = new Restaurant("Household", "Chores");
+    myRestaurant.save();
+    Dish myDish = new Dish("Jojos", "Fried", myRestaurant.getRestaurantId());
+    myDish.save();
+    Review myReview = new Review(100, "Joe", "2017-01-02", myDish.getDishId());
+    myReview.save();
+    Review myReview2 = new Review(10, "Joe", "2017-01-02", myDish.getDishId());
+    myReview2.save();
+    Review myReview3 = new Review(50, "Joe", "2017-01-02", myDish.getDishId());
+    myReview3.save();
+    Review myReview4 = new Review(40, "Joe", "2017-01-02", myDish.getDishId());
+    myReview4.save();
+    assertEquals(50, myRestaurant.getAverageRestaurantRating(), 0.01);
+  }
+
 }
